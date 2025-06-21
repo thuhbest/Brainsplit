@@ -1,0 +1,254 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #faf8ef;
+    color: #776e65;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.score-container {
+    display: flex;
+    gap: 10px;
+}
+
+.score, .best-score {
+    background-color: #bbada0;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.score span, .best-score span {
+    font-size: 1.2em;
+}
+
+.game-container {
+    background-color: #bbada0;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: flex;
+    gap: 15px;
+}
+
+.grid-left, .grid-right {
+    flex: 1;
+}
+
+.grid-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.grid-left .grid-header {
+    color: #3a7bd5;
+}
+
+.grid-right .grid-header {
+    color: #e74c3c;
+}
+
+.challenge-box {
+    background-color: #eee4da;
+    border-radius: 8px;
+    padding: 15px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.question {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+    min-height: 40px;
+}
+
+#left-question {
+    color: #3a7bd5;
+}
+
+#right-question {
+    color: #e74c3c;
+}
+
+.answer {
+    font-size: 1.8em;
+    text-align: center;
+    margin: 15px 0;
+    min-height: 30px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.option {
+    font-size: 2em;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #cdc1b4;
+}
+
+.option:hover {
+    background-color: #eee4da;
+}
+
+.timer-container {
+    background-color: #cdc1b4;
+    height: 20px;
+    border-radius: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+#left-timer {
+    background-color: #3a7bd5;
+}
+
+#right-timer {
+    background-color: #e74c3c;
+}
+
+.instructions {
+    font-size: 0.9em;
+    text-align: center;
+    color: #776e65;
+    margin-top: 10px;
+}
+
+.game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(238, 228, 218, 0.9);
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.game-message p {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    background-color: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #9f8b77;
+}
+
+.start-screen {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.start-screen h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.control-left, .control-right {
+    flex: 1;
+    padding: 15px;
+    background-color: #eee4da;
+    border-radius: 8px;
+    margin: 0 10px;
+}
+
+.control-left {
+    border-top: 5px solid #3a7bd5;
+}
+
+.control-right {
+    border-top: 5px solid #e74c3c;
+}
+
+.start-button {
+    background-color: #3a7bd5;
+    margin-right: 10px;
+}
+
+.meld-button {
+    background-color: #e74c3c;
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        flex-direction: column;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .control-left, .control-right {
+        margin: 10px 0;
+    }
+}

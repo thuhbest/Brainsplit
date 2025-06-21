@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainSplit: The Double-Thinking Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 BrainSplit 🧠</h1>
+            <div class="score-container">
+                <div class="score">Time: <span id="score">0</span>s</div>
+                <div class="best-score">Best: <span id="best-score">0</span>s</div>
+            </div>
+        </header>
+
+        <div class="game-container">
+            <div class="grid-container">
+                <div class="grid-left">
+                    <div class="grid-header">Left Brain (Logical)</div>
+                    <div class="challenge-box" id="left-challenge">
+                        <div class="question" id="left-question"></div>
+                        <div class="answer" id="left-answer"></div>
+                        <div class="timer-container">
+                            <div class="timer-bar" id="left-timer"></div>
+                        </div>
+                        <div class="instructions">Use WASD (W=1, A=2, S=3, D=4)</div>
+                    </div>
+                </div>
+
+                <div class="grid-right">
+                    <div class="grid-header">Right Brain (Creative)</div>
+                    <div class="challenge-box" id="right-challenge">
+                        <div class="question" id="right-question"></div>
+                        <div class="options" id="right-options"></div>
+                        <div class="timer-container">
+                            <div class="timer-bar" id="right-timer"></div>
+                        </div>
+                        <div class="instructions">Use Arrow Keys</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-message" id="game-message">
+            <p id="message-text"></p>
+            <div class="buttons">
+                <button class="keep-playing-button" id="keep-playing">Keep Going</button>
+                <button class="retry-button" id="retry">Try Again</button>
+            </div>
+        </div>
+
+        <div class="start-screen" id="start-screen">
+            <h2>The Double-Thinking Game</h2>
+            <p>Control two brains simultaneously!</p>
+            <div class="controls">
+                <div class="control-left">
+                    <h3>Left Brain (Logical)</h3>
+                    <p>WASD for numbers (W=1, A=2, S=3, D=4)</p>
+                    <p>Math, sequences, patterns</p>
+                </div>
+                <div class="control-right">
+                    <h3>Right Brain (Creative)</h3>
+                    <p>Arrow keys for selection</p>
+                    <p>SPACE for rhythm</p>
+                    <p>Colors, emojis, rhythms</p>
+                </div>
+            </div>
+            <button class="start-button" id="start-button">Start Game</button>
+            <button class="meld-button" id="meld-button">Mind Meld (2P)</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
