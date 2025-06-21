@@ -3,79 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrainSplit: The Double-Thinking Game by Thuhbest</title>
+    <title>BrainSplit by Thuhbest</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="start-screen" id="start-screen">
             <h1>🧠 BrainSplit 🧠</h1>
             <div class="author">by Thuhbest</div>
-        </header>
-
-        <div class="game-manual">
-            <h3>How to Play BrainSplit</h3>
             
-            <div class="manual-section">
-                <h4>🧠 The Challenge</h4>
-                <p>You must control two brains at the same time! Complete both challenges before time runs out.</p>
-                <p>If either brain fails, it's game over!</p>
-            </div>
-            
-            <div class="manual-section">
-                <h4>Left Brain (Logical)</h4>
-                <p>Solve math problems and number sequences:</p>
-                <div class="controls-diagram">
-                    <div class="control-row">
-                        <kbd>W</kbd> = 1 <kbd>A</kbd> = 2 <kbd>S</kbd> = 3 <kbd>D</kbd> = 4
-                    </div>
-                    <div class="control-row">
-                        <kbd>Q</kbd> = 5 <kbd>E</kbd> = 6 <kbd>F</kbd> = 7 <kbd>R</kbd> = 8
-                    </div>
-                    <div class="control-row">
-                        <kbd>⌫</kbd> Backspace <kbd>Enter</kbd> Submit Answer
-                    </div>
-                </div>
-                <p class="example">Example: For "3 × 5 = ?"<br>Press <kbd>S</kbd> then <kbd>D</kbd> (for 15) then <kbd>Enter</kbd></p>
-            </div>
-            
-            <div class="manual-section">
-                <h4>Right Brain (Creative)</h4>
-                <p>Match colors or emojis:</p>
-                <div class="controls-diagram">
-                    <div class="control-row">
-                        <kbd>←</kbd> 1st Option <kbd>↓</kbd> 2nd Option
-                    </div>
-                    <div class="control-row">
-                        <kbd>↑</kbd> 3rd Option <kbd>→</kbd> 4th Option
+            <div class="game-manual">
+                <h3>How to Play</h3>
+                <p>Control two brains at once! Complete both challenges before time runs out.</p>
+                
+                <div class="manual-section">
+                    <h4>Left Brain (Logical)</h4>
+                    <p>Solve math problems using number keys:</p>
+                    <div class="number-pad">
+                        <div class="number-row">
+                            <button class="num-key">1</button>
+                            <button class="num-key">2</button>
+                            <button class="num-key">3</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="num-key">4</button>
+                            <button class="num-key">5</button>
+                            <button class="num-key">6</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="num-key">7</button>
+                            <button class="num-key">8</button>
+                            <button class="num-key">9</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="wide-key">Backspace</button>
+                            <button class="num-key">0</button>
+                            <button class="wide-key">Enter</button>
+                        </div>
                     </div>
                 </div>
-                <p class="example">Example: If you see <span style="color: #FF5252">■</span> RED, select the red square from the options</p>
+                
+                <div class="manual-section">
+                    <h4>Right Brain (Creative)</h4>
+                    <p>Match colors or emojis using arrow keys:</p>
+                    <div class="arrow-keys">
+                        <div class="arrow-row">
+                            <button class="arrow-key">↑</button>
+                        </div>
+                        <div class="arrow-row">
+                            <button class="arrow-key">←</button>
+                            <button class="arrow-key">↓</button>
+                            <button class="arrow-key">→</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="manual-section">
-                <h4>⏱️ Timing</h4>
-                <p>Each challenge gives you 10 seconds to respond.</p>
-                <p>The game gets faster every 15 seconds!</p>
-            </div>
-            
-            <div class="manual-section">
-                <h4>👥 Mind Meld Mode (2 Players)</h4>
-                <p>One player controls Left Brain (WASD keys)</p>
-                <p>The other controls Right Brain (Arrow keys)</p>
-                <p>Work together to survive as long as possible!</p>
+            <div class="start-buttons">
+                <button class="start-button" id="start-button">Start Game</button>
+                <button class="meld-button" id="meld-button">2 Player Mode</button>
             </div>
         </div>
 
-        <div class="start-buttons">
-            <button class="start-button" id="start-button">Start Game (1 Player)</button>
-            <button class="meld-button" id="meld-button">Mind Meld (2 Players)</button>
+        <div class="game-container" id="game-container" style="display:none;">
+            <header>
+                <h1>🧠 BrainSplit 🧠</h1>
+                <div class="score-container">
+                    <div class="score">Time: <span id="score">0</span>s</div>
+                    <div class="best-score">Best: <span id="best-score">0</span>s</div>
+                </div>
+            </header>
+
+            <div class="grid-container">
+                <div class="grid-left">
+                    <div class="grid-header">Left Brain (Logical)</div>
+                    <div class="challenge-box" id="left-challenge">
+                        <div class="question" id="left-question"></div>
+                        <div class="answer" id="left-answer"></div>
+                        <div class="timer-container">
+                            <div class="timer-bar" id="left-timer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-right">
+                    <div class="grid-header">Right Brain (Creative)</div>
+                    <div class="challenge-box" id="right-challenge">
+                        <div class="question" id="right-question"></div>
+                        <div class="challenge-content" id="right-content"></div>
+                        <div class="options" id="right-options"></div>
+                        <div class="timer-container">
+                            <div class="timer-bar" id="right-timer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Rest of your existing game HTML goes here -->
-        <div class="game-container" style="display: none;">
-            <!-- Your existing game container content -->
+        <div class="game-message" id="game-message" style="display:none;">
+            <p id="message-text"></p>
+            <div class="buttons">
+                <button class="retry-button" id="retry">Try Again</button>
+            </div>
         </div>
     </div>
 
