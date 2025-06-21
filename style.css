@@ -61,44 +61,6 @@
     margin: 0 3px;
 }
 
-/* Update these existing rules */
-#left-question {
-    color: var(--left-color);
-    font-size: 2em;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#right-question {
-    color: var(--right-color);
-    font-size: 1.8em;
-    min-height: 40px;
-}
-
-.challenge-content {
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.option {
-    font-size: 2.5em;
-    padding: 15px;
-    margin: 0 10px;
-}
-
-/* Update timer colors */
-#left-timer {
-    background-color: var(--left-color);
-}
-
-#right-timer {
-    background-color: var(--right-color);
-}
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -197,11 +159,18 @@ h1 {
 }
 
 #left-question {
-    color: #3a7bd5;
+    color: var(--left-color);
+    font-size: 2em;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #right-question {
-    color: #e74c3c;
+    color: var(--right-color);
+    font-size: 1.8em;
+    min-height: 40px;
 }
 
 .answer {
@@ -214,12 +183,12 @@ h1 {
 .options {
     display: flex;
     justify-content: space-around;
-    margin: 15px 0;
+    margin: 0 10px;
 }
 
 .option {
-    font-size: 2em;
-    padding: 10px;
+    font-size: 2.5em;
+    padding: 15px;
     cursor: pointer;
     border-radius: 5px;
     background-color: #cdc1b4;
@@ -227,6 +196,14 @@ h1 {
 
 .option:hover {
     background-color: #eee4da;
+}
+
+.challenge-content {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .timer-container {
@@ -244,12 +221,13 @@ h1 {
 }
 
 #left-timer {
-    background-color: #3a7bd5;
+    background-color: var(--left-color);
 }
 
 #right-timer {
-    background-color: #e74c3c;
+    background-color: var(--right-color);
 }
+
 
 .instructions {
     font-size: 0.9em;
@@ -357,4 +335,64 @@ button:hover {
 /* Make challenge boxes taller */
 .challenge-box {
     height: 350px;
+}
+
+.game-manual {
+    background-color: rgba(238, 228, 218, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.game-manual h3 {
+    color: #776e65;
+    border-bottom: 2px solid #bbada0;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.manual-section {
+    margin-bottom: 20px;
+}
+
+.manual-section h4 {
+    color: #776e65;
+    margin-bottom: 8px;
+}
+
+.controls-diagram {
+    background-color: #eee4da;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+.control-row {
+    margin: 8px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+kbd {
+    background-color: #8f7a66;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.9em;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+
+/* Make the manual responsive */
+@media (max-width: 600px) {
+    .control-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .game-manual {
+        padding: 15px;
+    }
 }
