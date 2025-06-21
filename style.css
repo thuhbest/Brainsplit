@@ -1,81 +1,19 @@
-:root {
-    --left-color: #3a7bd5;
-    --right-color: #e74c3c;
-    --key-bg: #8f7a66;
-    --key-active: #6d5c4d;
-}
-
-.author {
-    font-style: italic;
-    color: #666;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.keyboard {
-    margin: 15px auto;
-    width: 90%;
-}
-
-.keyboard-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8px;
-}
-
-.key {
-    background-color: var(--key-bg);
-    color: white;
-    padding: 10px;
-    margin: 0 4px;
-    border-radius: 5px;
-    text-align: center;
-    min-width: 40px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.key.wide {
-    min-width: 80px;
-}
-
-.key:hover {
-    background-color: var(--key-active);
-}
-
-.keyboard-demo {
-    margin: 15px 0;
-    text-align: center;
-}
-
-.demo-row {
-    margin: 8px 0;
-}
-
-.demo-key {
-    display: inline-block;
-    background-color: var(--key-bg);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin: 0 3px;
-}
-
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #faf8ef;
     color: #776e65;
     margin: 0;
-    padding: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
 }
 
 header {
@@ -88,6 +26,14 @@ header {
 h1 {
     font-size: 2.5em;
     margin: 0;
+    color: #776e65;
+}
+
+.author {
+    font-style: italic;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .score-container {
@@ -144,58 +90,36 @@ h1 {
     background-color: #eee4da;
     border-radius: 8px;
     padding: 15px;
-    height: 250px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .question {
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
     text-align: center;
     margin: 10px 0;
-    min-height: 40px;
-}
-
-#left-question {
-    color: var(--left-color);
-    font-size: 2em;
     min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+#left-question {
+    color: #3a7bd5;
+}
+
 #right-question {
-    color: var(--right-color);
-    font-size: 1.8em;
-    min-height: 40px;
+    color: #e74c3c;
 }
 
 .answer {
-    font-size: 1.8em;
+    font-size: 2.5em;
     text-align: center;
     margin: 15px 0;
-    min-height: 30px;
-}
-
-.options {
-    display: flex;
-    justify-content: space-around;
-    margin: 0 10px;
-}
-
-.option {
-    font-size: 2.5em;
-    padding: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #cdc1b4;
-}
-
-.option:hover {
-    background-color: #eee4da;
+    min-height: 50px;
 }
 
 .challenge-content {
@@ -204,6 +128,28 @@ h1 {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.option {
+    font-size: 2.5em;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #cdc1b4;
+    cursor: pointer;
+    min-width: 80px;
+    text-align: center;
+}
+
+.option:hover {
+    background-color: #eee4da;
 }
 
 .timer-container {
@@ -221,34 +167,25 @@ h1 {
 }
 
 #left-timer {
-    background-color: var(--left-color);
+    background-color: #3a7bd5;
 }
 
 #right-timer {
-    background-color: var(--right-color);
-}
-
-
-.instructions {
-    font-size: 0.9em;
-    text-align: center;
-    color: #776e65;
-    margin-top: 10px;
+    background-color: #e74c3c;
 }
 
 .game-message {
-    display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(238, 228, 218, 0.9);
     z-index: 100;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
 }
 
 .game-message p {
@@ -280,132 +217,14 @@ button:hover {
 
 .start-screen {
     text-align: center;
-    margin-top: 30px;
 }
 
-.start-screen h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.controls {
-    display: flex;
-    justify-content: space-between;
-    margin: 30px 0;
-}
-
-.control-left, .control-right {
-    flex: 1;
-    padding: 15px;
-    background-color: #eee4da;
-    border-radius: 8px;
-    margin: 0 10px;
-}
-
-.control-left {
-    border-top: 5px solid #3a7bd5;
-}
-
-.control-right {
-    border-top: 5px solid #e74c3c;
-}
-
-.start-button {
-    background-color: #3a7bd5;
-    margin-right: 10px;
-}
-
-.meld-button {
-    background-color: #e74c3c;
-}
-
-@media (max-width: 600px) {
-    .grid-container {
-        flex-direction: column;
-    }
-    
-    .controls {
-        flex-direction: column;
-    }
-    
-    .control-left, .control-right {
-        margin: 10px 0;
-    }
-}
-/* Make challenge boxes taller */
-.challenge-box {
-    height: 350px;
-}
-
-.game-manual {
-    background-color: rgba(238, 228, 218, 0.8);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
-    text-align: left;
-}
-
-.game-manual h3 {
-    color: #776e65;
-    border-bottom: 2px solid #bbada0;
-    padding-bottom: 10px;
-    margin-top: 0;
-}
-
-.manual-section {
-    margin-bottom: 20px;
-}
-
-.manual-section h4 {
-    color: #776e65;
-    margin-bottom: 8px;
-}
-
-.controls-diagram {
-    background-color: #eee4da;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 10px 0;
-}
-
-.control-row {
-    margin: 8px 0;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-kbd {
-    background-color: #8f7a66;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 0.9em;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
-}
-
-/* Make the manual responsive */
-@media (max-width: 600px) {
-    .control-row {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .game-manual {
-        padding: 15px;
-    }
-}
-
-/* Add to your style.css */
 .game-manual {
     background-color: rgba(238, 228, 218, 0.9);
     border-radius: 15px;
     padding: 25px;
     margin: 20px 0;
-    max-width: 800px;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 .game-manual h3 {
@@ -413,7 +232,6 @@ kbd {
     border-bottom: 2px solid #bbada0;
     padding-bottom: 10px;
     margin-top: 0;
-    font-size: 1.8em;
 }
 
 .manual-section {
@@ -422,99 +240,108 @@ kbd {
 
 .manual-section h4 {
     color: #776e65;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    margin-bottom: 15px;
 }
 
-.controls-diagram {
+.number-pad {
+    display: inline-block;
     background-color: #eee4da;
-    border-radius: 10px;
     padding: 15px;
-    margin: 15px 0;
+    border-radius: 10px;
+    margin: 10px 0;
 }
 
-.control-row {
-    margin: 10px 0;
+.number-row {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 8px;
 }
 
-kbd {
+.num-key {
     background-color: #8f7a66;
     color: white;
-    padding: 5px 10px;
+    border: none;
     border-radius: 5px;
-    font-family: inherit;
-    font-size: 1em;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
-    display: inline-block;
-    min-width: 30px;
-    text-align: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
-.example {
-    background-color: #f8f1e9;
-    padding: 10px;
-    border-radius: 8px;
-    font-style: italic;
-    margin-top: 10px;
+.wide-key {
+    background-color: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 130px;
+    height: 60px;
+    margin: 0 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.arrow-keys {
+    display: inline-block;
+    background-color: #eee4da;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.arrow-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.arrow-key {
+    background-color: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 .start-buttons {
     display: flex;
-    gap: 20px;
     justify-content: center;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-
-.start-button, .meld-button {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .start-button {
     background-color: #4CAF50;
-    color: white;
+    padding: 15px 30px;
+    font-size: 1.2em;
 }
 
 .meld-button {
     background-color: #2196F3;
-    color: white;
-}
-
-.start-button:hover, .meld-button:hover {
-    transform: translateY(-3px);
-}
-
-.start-button:active, .meld-button:active {
-    transform: translateY(1px);
+    padding: 15px 30px;
+    font-size: 1.2em;
 }
 
 @media (max-width: 600px) {
-    .game-manual {
-        padding: 15px;
-    }
-    
-    .control-row {
-        gap: 10px;
+    .grid-container {
+        flex-direction: column;
     }
     
     .start-buttons {
         flex-direction: column;
-        gap: 15px;
     }
     
-    .start-button, .meld-button {
-        width: 100%;
+    .num-key, .arrow-key {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .wide-key {
+        width: 110px;
+        height: 50px;
     }
 }
