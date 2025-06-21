@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let mindMeldMode = false;
     let leftChallenge = null;
     let rightChallenge = null;
-    let leftTimerInterval = null;
-    let rightTimerInterval = null;
     let gameInterval = null;
     
     // DOM elements
@@ -31,6 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
     meldButton.addEventListener('click', () => startGame(true));
     retryButton.addEventListener('click', startGame);
     keepPlayingButton.addEventListener('click', continueGame);
+    
+    // Add keyboard click handlers
+    document.querySelectorAll('.key').forEach(key => {
+        key.addEventListener('click', () => {
+            const keyValue = key.dataset.key;
+            if (keyValue === 'backspace') {
+                handleKeyPress({key: 'Backspace'});
+            } else if (keyValue === 'enter') {
+                handleKeyPress({key: 'Enter'});
+            } else {
+                handleKeyPress({key: keyValue});
+            }
+        });
+    });
     
     document.addEventListener('keydown', handleKeyPress);
     
@@ -61,8 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function endGame(message) {
         gameActive = false;
         gameOver = true;
-        clearInterval(leftTimerInterval);
-        clearInterval(rightTimerInterval);
         clearInterval(gameInterval);
         
         messageText.textContent = message;
@@ -84,15 +94,19 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreDisplay.textContent = score;
         
         // Increase difficulty
-        const difficulty = Math.min(10, Math.floor(score / 10));
-        const leftTimeLimit = Math.max(2, 5 - difficulty * 0.2);
-        const rightTimeLimit = Math.max(2, 5 - difficulty * 0.2);
+        const difficulty = Math.min(10, Math.floor(score / 15));
+        const leftTimeLimit = Math.max(5, 10 - difficulty);
+        const rightTimeLimit = Math.max(5, 10 - difficulty);
+        
+        // Update timers
+        const leftElapsed = (Date.now() - leftChallenge.startTime) / 1000;
+        const rightElapsed = (Date.now() - rightChallenge.startTime) / 1000;
+        
+        leftChallenge.timeRemaining = Math.max(0, leftTimeLimit - leftElapsed);
+        rightChallenge.timeRemaining = Math.max(0, rightTimeLimit - rightElapsed);
         
         document.getElementById('left-timer').style.width = `${(leftChallenge.timeRemaining / leftTimeLimit) * 100}%`;
         document.getElementById('right-timer').style.width = `${(rightChallenge.timeRemaining / rightTimeLimit) * 100}%`;
-        
-        leftChallenge.timeRemaining -= 0.1;
-        rightChallenge.timeRemaining -= 0.1;
         
         if (leftChallenge.timeRemaining <= 0) {
             endGame('Left Brain Failed!');
@@ -103,13 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Random brain comments
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.008) {
             showBrainComment();
         }
     }
     
     function generateLeftChallenge() {
-        const types = ['math', 'sequence', 'pattern'];
+        const types = ['math', 'sequence'];
         const type = types[Math.floor(Math.random() * types.length)];
         
         leftChallenge = {
@@ -117,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
             question: '',
             answer: '',
             userAnswer: '',
-            timeLimit: 5,
-            timeRemaining: 5
+            startTime: Date.now(),
+            timeRemaining: 10
         };
         
         if (type === 'math') {
@@ -131,42 +145,23 @@ document.addEventListener('DOMContentLoaded', () => {
             leftChallenge.answer = eval(`${a} ${op} ${b}`).toString();
         } 
         else if (type === 'sequence') {
-            const seqTypes = ['arithmetic', 'geometric', 'fibonacci'];
+            const seqTypes = ['arithmetic', 'geometric'];
             const seqType = seqTypes[Math.floor(Math.random() * seqTypes.length)];
             
             if (seqType === 'arithmetic') {
                 const start = Math.floor(Math.random() * 10) + 1;
-                const step = Math.floor(Math.random() * 5) + 1;
+                const step = Math.floor(Math.random() * 3) + 1;
                 
                 leftChallenge.question = `${start}, ${start+step}, ${start+step*2}, ?`;
                 leftChallenge.answer = (start + step * 3).toString();
             } 
             else if (seqType === 'geometric') {
-                const start = Math.floor(Math.random() * 5) + 1;
+                const start = Math.floor(Math.random() * 3) + 1;
                 const step = Math.floor(Math.random() * 2) + 2;
                 
                 leftChallenge.question = `${start}, ${start*step}, ${start*step*step}, ?`;
                 leftChallenge.answer = (start * step * step * step).toString();
-            } 
-            else { // fibonacci
-                const a = Math.floor(Math.random() * 5) + 1;
-                const b = Math.floor(Math.random() * 5) + 1;
-                
-                leftChallenge.question = `${a}, ${b}, ${a+b}, ?`;
-                leftChallenge.answer = (b + (a + b)).toString();
             }
-        } 
-        else if (type === 'pattern') {
-            const patterns = [
-                { question: "🔴 🟢 🔴 🟢 ?", answer: "🔴" },
-                { question: "⬆️ ➡️ ⬇️ ⬅️ ?", answer: "⬆️" },
-                { question: "1 4 9 16 ?", answer: "25" },
-                { question: "A C E G ?", answer: "I" }
-            ];
-            
-            const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-            leftChallenge.question = pattern.question;
-            leftChallenge.answer = pattern.answer;
         }
         
         document.getElementById('left-question').textContent = leftChallenge.question;
@@ -174,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function generateRightChallenge() {
-        const types = ['color', 'rhythm', 'emoji'];
+        const types = ['color', 'emoji'];
         const type = types[Math.floor(Math.random() * types.length)];
         
         rightChallenge = {
@@ -182,17 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
             question: '',
             options: [],
             answer: '',
-            userInput: [],
-            timeLimit: 5,
-            timeRemaining: 5,
-            pattern: []
+            startTime: Date.now(),
+            timeRemaining: 10
         };
         
-        const optionsContainer = document.getElementById('right-options');
-        optionsContainer.innerHTML = '';
+        const contentEl = document.getElementById('right-content');
+        const optionsEl = document.getElementById('right-options');
+        contentEl.innerHTML = '';
+        optionsEl.innerHTML = '';
         
         if (type === 'color') {
-            rightChallenge.question = 'Match this color!';
+            rightChallenge.question = 'Match this color:';
             const colors = ['#FF5252', '#4CAF50', '#2196F3', '#FFEB3B', '#9C27B0'];
             rightChallenge.answer = colors[Math.floor(Math.random() * colors.length)];
             
@@ -202,60 +197,28 @@ document.addEventListener('DOMContentLoaded', () => {
             rightChallenge.options.push(rightChallenge.answer);
             rightChallenge.options = shuffleArray(rightChallenge.options);
             
-            // Display color options
+            // Display target color
+            const targetColor = document.createElement('div');
+            targetColor.style.width = '120px';
+            targetColor.style.height = '80px';
+            targetColor.style.backgroundColor = rightChallenge.answer;
+            targetColor.style.borderRadius = '10px';
+            targetColor.style.margin = '10px 0';
+            contentEl.appendChild(targetColor);
+            
+            // Display options
             rightChallenge.options.forEach((color, index) => {
                 const colorBox = document.createElement('div');
                 colorBox.className = 'option';
                 colorBox.style.backgroundColor = color;
                 colorBox.dataset.index = index;
                 colorBox.addEventListener('click', () => handleRightInput(index));
-                optionsContainer.appendChild(colorBox);
+                optionsEl.appendChild(colorBox);
             });
-            
-            // Show target color
-            const targetColorBox = document.createElement('div');
-            targetColorBox.style.width = '100px';
-            targetColorBox.style.height = '50px';
-            targetColorBox.style.backgroundColor = rightChallenge.answer;
-            targetColorBox.style.margin = '10px auto';
-            targetColorBox.style.borderRadius = '5px';
-            optionsContainer.insertBefore(targetColorBox, optionsContainer.firstChild);
-        } 
-        else if (type === 'rhythm') {
-            rightChallenge.question = 'Repeat the rhythm!';
-            rightChallenge.pattern = Array.from({ length: 4 }, () => Math.random() > 0.5);
-            rightChallenge.answer = rightChallenge.pattern;
-            
-            // Display rhythm pattern
-            const rhythmDisplay = document.createElement('div');
-            rhythmDisplay.style.display = 'flex';
-            rhythmDisplay.style.justifyContent = 'center';
-            rhythmDisplay.style.gap = '20px';
-            rhythmDisplay.style.margin = '15px 0';
-            
-            rightChallenge.pattern.forEach(beat => {
-                const beatCircle = document.createElement('div');
-                beatCircle.style.width = '30px';
-                beatCircle.style.height = '30px';
-                beatCircle.style.borderRadius = '50%';
-                beatCircle.style.backgroundColor = beat ? '#4CAF50' : '#9E9E9E';
-                rhythmDisplay.appendChild(beatCircle);
-            });
-            
-            optionsContainer.appendChild(rhythmDisplay);
-            
-            // Add user progress display
-            const userProgress = document.createElement('div');
-            userProgress.id = 'rhythm-progress';
-            userProgress.style.display = 'flex';
-            userProgress.style.justifyContent = 'center';
-            userProgress.style.gap = '20px';
-            userProgress.style.margin = '15px 0';
-            optionsContainer.appendChild(userProgress);
         } 
         else if (type === 'emoji') {
-            rightChallenge.question = 'Find the matching emoji!';
-            const emojis = ['😀', '😡', '🥶', '🥵', '😎', '🤡', '👻', '💀'];
+            rightChallenge.question = 'Find the matching emoji:';
+            const emojis = ['😀', '😂', '😍', '😎', '🤔', '🥳', '🤯', '👻'];
             rightChallenge.answer = emojis[Math.floor(Math.random() * emojis.length)];
             
             // Create options (3 random emojis + the answer)
@@ -264,23 +227,22 @@ document.addEventListener('DOMContentLoaded', () => {
             rightChallenge.options.push(rightChallenge.answer);
             rightChallenge.options = shuffleArray(rightChallenge.options);
             
-            // Display emoji options
+            // Display target emoji
+            const targetEmoji = document.createElement('div');
+            targetEmoji.textContent = rightChallenge.answer;
+            targetEmoji.style.fontSize = '4em';
+            targetEmoji.style.margin = '10px 0';
+            contentEl.appendChild(targetEmoji);
+            
+            // Display options
             rightChallenge.options.forEach((emoji, index) => {
                 const emojiBox = document.createElement('div');
                 emojiBox.className = 'option';
                 emojiBox.textContent = emoji;
                 emojiBox.dataset.index = index;
                 emojiBox.addEventListener('click', () => handleRightInput(index));
-                optionsContainer.appendChild(emojiBox);
+                optionsEl.appendChild(emojiBox);
             });
-            
-            // Show target emoji
-            const targetEmoji = document.createElement('div');
-            targetEmoji.textContent = rightChallenge.answer;
-            targetEmoji.style.fontSize = '2em';
-            targetEmoji.style.textAlign = 'center';
-            targetEmoji.style.margin = '10px 0';
-            optionsContainer.insertBefore(targetEmoji, optionsContainer.firstChild);
         }
         
         document.getElementById('right-question').textContent = rightChallenge.question;
@@ -314,56 +276,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Right brain controls (arrow keys)
-        if (!mindMeldMode || ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Enter'].includes(e.key)) {
-            if (rightChallenge.type === 'color' || rightChallenge.type === 'emoji') {
-                let selectedIndex = -1;
-                
-                if (e.key === 'ArrowLeft') selectedIndex = 0;
-                else if (e.key === 'ArrowDown') selectedIndex = 1;
-                else if (e.key === 'ArrowUp') selectedIndex = 2;
-                else if (e.key === 'ArrowRight') selectedIndex = 3;
-                
-                if (selectedIndex >= 0) {
-                    handleRightInput(selectedIndex);
-                }
-            } 
-            else if (rightChallenge.type === 'rhythm' && e.key === ' ') {
-                rightChallenge.userInput.push(true);
-                updateRhythmProgress();
-                
-                if (rightChallenge.userInput.length === rightChallenge.pattern.length) {
-                    if (rightChallenge.userInput.every((val, i) => val === rightChallenge.pattern[i])) {
-                        generateRightChallenge();
-                    } else {
-                        endGame('Right Brain Failed!');
-                    }
-                }
+        if (!mindMeldMode || ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            let selectedIndex = -1;
+            
+            if (e.key === 'ArrowLeft') selectedIndex = 0;
+            else if (e.key === 'ArrowDown') selectedIndex = 1;
+            else if (e.key === 'ArrowUp') selectedIndex = 2;
+            else if (e.key === 'ArrowRight') selectedIndex = 3;
+            
+            if (selectedIndex >= 0) {
+                handleRightInput(selectedIndex);
             }
         }
     }
     
     function handleRightInput(index) {
-        if (rightChallenge.type === 'color' || rightChallenge.type === 'emoji') {
-            if (rightChallenge.options[index] === rightChallenge.answer) {
-                generateRightChallenge();
-            } else {
-                endGame('Right Brain Failed!');
-            }
+        if (rightChallenge.options[index] === rightChallenge.answer) {
+            generateRightChallenge();
+        } else {
+            endGame('Right Brain Failed!');
         }
-    }
-    
-    function updateRhythmProgress() {
-        const progressContainer = document.getElementById('rhythm-progress');
-        progressContainer.innerHTML = '';
-        
-        rightChallenge.userInput.forEach((beat, i) => {
-            const beatCircle = document.createElement('div');
-            beatCircle.style.width = '20px';
-            beatCircle.style.height = '20px';
-            beatCircle.style.borderRadius = '50%';
-            beatCircle.style.backgroundColor = beat === rightChallenge.pattern[i] ? '#4CAF50' : '#F44336';
-            progressContainer.appendChild(beatCircle);
-        });
     }
     
     function showBrainComment() {
@@ -377,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Left: My challenge is clearly more important!",
             "Right: Boring! Look at my emojis instead!",
             "Left: 2+2 is... really? That's your answer?",
-            "Right: Tap with the rhythm of your soul!",
+            "Right: Created by Thuhbest!",
             "Left: Logical thinking will save you!",
             "Right: Creativity is the key to success!"
         ];
@@ -388,12 +320,12 @@ document.addEventListener('DOMContentLoaded', () => {
         commentElement.textContent = comment;
         
         if (comment.startsWith("Left:")) {
-            commentElement.style.color = '#3a7bd5';
+            commentElement.style.color = 'var(--left-color)';
             commentElement.style.position = 'absolute';
             commentElement.style.top = '100px';
             commentElement.style.left = '50px';
         } else {
-            commentElement.style.color = '#e74c3c';
+            commentElement.style.color = 'var(--right-color)';
             commentElement.style.position = 'absolute';
             commentElement.style.top = '100px';
             commentElement.style.right = '50px';
