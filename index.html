@@ -12,105 +12,70 @@
         <header>
             <h1>🧠 BrainSplit 🧠</h1>
             <div class="author">by Thuhbest</div>
-            <div class="score-container">
-                <div class="score">Time: <span id="score">0</span>s</div>
-                <div class="best-score">Best: <span id="best-score">0</span>s</div>
-            </div>
         </header>
 
-        <div class="game-container">
-            <div class="grid-container">
-                <div class="grid-left">
-                    <div class="grid-header">Left Brain (Logical)</div>
-                    <div class="challenge-box" id="left-challenge">
-                        <div class="question" id="left-question"></div>
-                        <div class="answer" id="left-answer"></div>
-                        <div class="keyboard">
-                            <div class="keyboard-row">
-                                <div class="key" data-key="q">Q (5)</div>
-                                <div class="key" data-key="w">W (1)</div>
-                                <div class="key" data-key="e">E (6)</div>
-                                <div class="key" data-key="r">R (8)</div>
-                            </div>
-                            <div class="keyboard-row">
-                                <div class="key" data-key="a">A (2)</div>
-                                <div class="key" data-key="s">S (3)</div>
-                                <div class="key" data-key="d">D (4)</div>
-                                <div class="key" data-key="f">F (7)</div>
-                            </div>
-                            <div class="keyboard-row">
-                                <div class="key wide" data-key="backspace">⌫</div>
-                                <div class="key wide" data-key="enter">ENTER</div>
-                            </div>
-                        </div>
-                        <div class="timer-container">
-                            <div class="timer-bar" id="left-timer"></div>
-                        </div>
+        <div class="game-manual">
+            <h3>How to Play BrainSplit</h3>
+            
+            <div class="manual-section">
+                <h4>🧠 The Challenge</h4>
+                <p>You must control two brains at the same time! Complete both challenges before time runs out.</p>
+                <p>If either brain fails, it's game over!</p>
+            </div>
+            
+            <div class="manual-section">
+                <h4>Left Brain (Logical)</h4>
+                <p>Solve math problems and number sequences:</p>
+                <div class="controls-diagram">
+                    <div class="control-row">
+                        <kbd>W</kbd> = 1 <kbd>A</kbd> = 2 <kbd>S</kbd> = 3 <kbd>D</kbd> = 4
+                    </div>
+                    <div class="control-row">
+                        <kbd>Q</kbd> = 5 <kbd>E</kbd> = 6 <kbd>F</kbd> = 7 <kbd>R</kbd> = 8
+                    </div>
+                    <div class="control-row">
+                        <kbd>⌫</kbd> Backspace <kbd>Enter</kbd> Submit Answer
                     </div>
                 </div>
-
-                <div class="grid-right">
-                    <div class="grid-header">Right Brain (Creative)</div>
-                    <div class="challenge-box" id="right-challenge">
-                        <div class="question" id="right-question"></div>
-                        <div class="challenge-content" id="right-content"></div>
-                        <div class="options" id="right-options"></div>
-                        <div class="timer-container">
-                            <div class="timer-bar" id="right-timer"></div>
-                        </div>
+                <p class="example">Example: For "3 × 5 = ?"<br>Press <kbd>S</kbd> then <kbd>D</kbd> (for 15) then <kbd>Enter</kbd></p>
+            </div>
+            
+            <div class="manual-section">
+                <h4>Right Brain (Creative)</h4>
+                <p>Match colors or emojis:</p>
+                <div class="controls-diagram">
+                    <div class="control-row">
+                        <kbd>←</kbd> 1st Option <kbd>↓</kbd> 2nd Option
+                    </div>
+                    <div class="control-row">
+                        <kbd>↑</kbd> 3rd Option <kbd>→</kbd> 4th Option
                     </div>
                 </div>
+                <p class="example">Example: If you see <span style="color: #FF5252">■</span> RED, select the red square from the options</p>
+            </div>
+            
+            <div class="manual-section">
+                <h4>⏱️ Timing</h4>
+                <p>Each challenge gives you 10 seconds to respond.</p>
+                <p>The game gets faster every 15 seconds!</p>
+            </div>
+            
+            <div class="manual-section">
+                <h4>👥 Mind Meld Mode (2 Players)</h4>
+                <p>One player controls Left Brain (WASD keys)</p>
+                <p>The other controls Right Brain (Arrow keys)</p>
+                <p>Work together to survive as long as possible!</p>
             </div>
         </div>
 
-        <div class="game-message" id="game-message">
-            <p id="message-text"></p>
-            <div class="buttons">
-                <button class="keep-playing-button" id="keep-playing">Keep Going</button>
-                <button class="retry-button" id="retry">Try Again</button>
-            </div>
+        <div class="start-buttons">
+            <button class="start-button" id="start-button">Start Game (1 Player)</button>
+            <button class="meld-button" id="meld-button">Mind Meld (2 Players)</button>
         </div>
 
-        <div class="start-screen" id="start-screen">
-            <h2>The Double-Thinking Game</h2>
-            <div class="author">by Thuhbest</div>
-            <p>Control two brains simultaneously!</p>
-            <div class="controls">
-                <div class="control-left">
-                    <h3>Left Brain (Logical)</h3>
-                    <div class="keyboard-demo">
-                        <div class="demo-row">
-                            <span class="demo-key">W</span> = 1
-                            <span class="demo-key">A</span> = 2
-                            <span class="demo-key">S</span> = 3
-                        </div>
-                        <div class="demo-row">
-                            <span class="demo-key">D</span> = 4
-                            <span class="demo-key">Q</span> = 5
-                            <span class="demo-key">E</span> = 6
-                        </div>
-                        <div class="demo-row">
-                            <span class="demo-key">F</span> = 7
-                            <span class="demo-key">R</span> = 8
-                        </div>
-                    </div>
-                    <p>Solve math problems and sequences</p>
-                </div>
-                <div class="control-right">
-                    <h3>Right Brain (Creative)</h3>
-                    <div class="keyboard-demo">
-                        <div class="demo-row">
-                            <span class="demo-key">←</span> <span class="demo-key">↑</span> <span class="demo-key">↓</span> <span class="demo-key">→</span>
-                        </div>
-                        <div class="demo-row">
-                            <span class="demo-key">SPACE</span> for rhythm
-                        </div>
-                    </div>
-                    <p>Match colors, emojis, or tap rhythms</p>
-                </div>
-            </div>
-            <button class="start-button" id="start-button">Start Game</button>
-            <button class="meld-button" id="meld-button">Mind Meld (2P)</button>
+        <!-- Rest of your existing game HTML goes here -->
+        <div class="game-container" style="display: none;">
+            <!-- Your existing game container content -->
         </div>
     </div>
 
