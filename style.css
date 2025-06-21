@@ -396,3 +396,125 @@ kbd {
         padding: 15px;
     }
 }
+
+/* Add to your style.css */
+.game-manual {
+    background-color: rgba(238, 228, 218, 0.9);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    max-width: 800px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.game-manual h3 {
+    color: #776e65;
+    border-bottom: 2px solid #bbada0;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.8em;
+}
+
+.manual-section {
+    margin-bottom: 25px;
+}
+
+.manual-section h4 {
+    color: #776e65;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.controls-diagram {
+    background-color: #eee4da;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.control-row {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+kbd {
+    background-color: #8f7a66;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+}
+
+.example {
+    background-color: #f8f1e9;
+    padding: 10px;
+    border-radius: 8px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.start-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.start-button, .meld-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.start-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.meld-button {
+    background-color: #2196F3;
+    color: white;
+}
+
+.start-button:hover, .meld-button:hover {
+    transform: translateY(-3px);
+}
+
+.start-button:active, .meld-button:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 600px) {
+    .game-manual {
+        padding: 15px;
+    }
+    
+    .control-row {
+        gap: 10px;
+    }
+    
+    .start-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .start-button, .meld-button {
+        width: 100%;
+    }
+}
