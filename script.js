@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // DOM elements
     const startScreen = document.getElementById('start-screen');
-    const gameContainer = document.querySelector('.game-container');
+    const gameContainer = document.getElementById('game-container');
     const gameMessage = document.getElementById('game-message');
     const messageText = document.getElementById('message-text');
     const scoreDisplay = document.getElementById('score');
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-button');
     const meldButton = document.getElementById('meld-button');
     const retryButton = document.getElementById('retry');
-    const keepPlayingButton = document.getElementById('keep-playing');
     
     // Initialize
     bestScoreDisplay.textContent = bestScore;
@@ -28,21 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     startButton.addEventListener('click', startGame);
     meldButton.addEventListener('click', () => startGame(true));
     retryButton.addEventListener('click', startGame);
-    keepPlayingButton.addEventListener('click', continueGame);
-    
-    // Add keyboard click handlers
-    document.querySelectorAll('.key').forEach(key => {
-        key.addEventListener('click', () => {
-            const keyValue = key.dataset.key;
-            if (keyValue === 'backspace') {
-                handleKeyPress({key: 'Backspace'});
-            } else if (keyValue === 'enter') {
-                handleKeyPress({key: 'Enter'});
-            } else {
-                handleKeyPress({key: keyValue});
-            }
-        });
-    });
     
     document.addEventListener('keydown', handleKeyPress);
     
@@ -64,12 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gameInterval = setInterval(updateGame, 100);
     }
     
-    function continueGame() {
-        gameActive = true;
-        gameOver = false;
-        gameMessage.style.display = 'none';
-    }
-    
     function endGame(message) {
         gameActive = false;
         gameOver = true;
@@ -77,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         messageText.textContent = message;
         gameMessage.style.display = 'flex';
-        keepPlayingButton.style.display = 'none';
         
         if (score > bestScore) {
             bestScore = score;
@@ -204,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             targetColor.style.backgroundColor = rightChallenge.answer;
             targetColor.style.borderRadius = '10px';
             targetColor.style.margin = '10px 0';
+            targetColor.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
             contentEl.appendChild(targetColor);
             
             // Display options
@@ -251,15 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleKeyPress(e) {
         if (!gameActive || gameOver) return;
         
-        // Left brain controls (WASD for numbers)
-        if (!mindMeldMode || ['w', 'a', 's', 'd', 'q', 'e', 'f', 'r', 'Backspace', 'Enter'].includes(e.key)) {
-            const keyMap = {
-                'w': '1', 'a': '2', 's': '3', 'd': '4',
-                'q': '5', 'e': '6', 'f': '7', 'r': '8'
-            };
-            
-            if (keyMap[e.key]) {
-                leftChallenge.userAnswer += keyMap[e.key];
+        // Left brain controls (number keys)
+        if (!mindMeldMode || ['1','2','3','4','5','6','7','8','9','0','Backspace','Enter'].includes(e.key)) {
+            if (e.key >= '0' && e.key <= '9') {
+                leftChallenge.userAnswer += e.key;
                 document.getElementById('left-answer').textContent = leftChallenge.userAnswer;
             } 
             else if (e.key === 'Backspace') {
@@ -318,17 +291,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const commentElement = document.createElement('div');
         commentElement.className = 'brain-comment';
         commentElement.textContent = comment;
+        commentElement.style.position = 'absolute';
+        commentElement.style.top = '20px';
+        commentElement.style.left = '50%';
+        commentElement.style.transform = 'translateX(-50%)';
+        commentElement.style.backgroundColor = 'rgba(255,255,255,0.9)';
+        commentElement.style.padding = '10px 20px';
+        commentElement.style.borderRadius = '20px';
+        commentElement.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
         
         if (comment.startsWith("Left:")) {
-            commentElement.style.color = 'var(--left-color)';
-            commentElement.style.position = 'absolute';
-            commentElement.style.top = '100px';
-            commentElement.style.left = '50px';
+            commentElement.style.color = '#3a7bd5';
+            commentElement.style.borderLeft = '5px solid #3a7bd5';
         } else {
-            commentElement.style.color = 'var(--right-color)';
-            commentElement.style.position = 'absolute';
-            commentElement.style.top = '100px';
-            commentElement.style.right = '50px';
+            commentElement.style.color = '#e74c3c';
+            commentElement.style.borderLeft = '5px solid #e74c3c';
         }
         
         document.querySelector('.game-container').appendChild(commentElement);
