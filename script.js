@@ -253,9 +253,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let selectedIndex = -1;
             
             if (e.key === 'ArrowLeft') selectedIndex = 0;
-            else if (e.key === 'ArrowDown') selectedIndex = 1;
+            else if (e.key === 'ArrowDown') selectedIndex = 2;
             else if (e.key === 'ArrowUp') selectedIndex = 3;
-            else if (e.key === 'ArrowRight') selectedIndex = 2;
+            else if (e.key === 'ArrowRight') selectedIndex = 1;
             
             if (selectedIndex >= 0) {
                 handleRightInput(selectedIndex);
